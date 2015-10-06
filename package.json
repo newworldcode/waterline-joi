@@ -1,0 +1,34 @@
+{
+  "name": "waterline-joi",
+  "version": "1.0.0",
+  "description": "Waterline Blueprint to Joi validation converter",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape tests/*.js | tap-spec",
+    "test-coverage": "istanbul cover tape tests/*.js --recursive --report lcov html | tap-spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/newworldcode/waterline-joi.git"
+  },
+  "keywords": [
+    "waterline",
+    "joi",
+    "converter"
+  ],
+  "author": "newworldcode <hello@newworld.codes> (https://newworld.codes)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/newworldcode/waterline-joi/issues"
+  },
+  "homepage": "https://github.com/newworldcode/waterline-joi#readme",
+  "devDependencies": {
+    "eslint": "^1.5.1",
+    "istanbul": "^0.3.22",
+    "tap-spec": "^4.1.0",
+    "tape": "^4.2.0"
+  },
+  "dependencies": {
+    "joi": "^6.9.0"
+  }
+}
