@@ -70,7 +70,20 @@ function convert(blueprint) {
         out = out.pattern(value.is || value.regex)
       }
 
+      // Is it an url.
+      if (value.hasOwnProperty("url") || value.hasOwnProperty("urlish")) {
+        out = out.uri()
+      }
 
+      // Is it a hex string?
+      if (value.hexadecimal) {
+        out = out.hex()
+      }
+
+      // Or a hex colour?
+      if (value.hexColor) {
+        out = out.min(3).max(6).hex()
+      }
 
       break
 
@@ -83,12 +96,29 @@ function convert(blueprint) {
     case "time":
     case "datetime":
       out = out.date()
+
+      if (value.hasOwnProperty("before")) {
+        out = out.max(value.before)
+      }
+
+      if (value.hasOwnProperty("after")) {
+        out = out.min(value.after)
+      }
       break
 
     case "binary":
       out = out.binary()
       break
     } // </switch
+
+    // Check for various length arguments.
+    if (value.hasOwnProperty("min") || value.hasOwnProperty("minLength")) {
+      out = out.min(value.min || value.minLength)
+    }
+
+    if (value.hasOwnProperty("max") || value.hasOwnProperty("maxLength")) {
+      out = out.min(value.max || value.maxLength)
+    }
 
     // Check for more `.valid()` cases.
     if (value.in && value.in.length > 0) {
@@ -110,6 +140,7 @@ function convert(blueprint) {
       out = out.default(value.defaultsTo, "Default Joi value").optional()
     }
 
+    // Add the property to the return value.
     ret[property_key] = out
 
   } // </for
