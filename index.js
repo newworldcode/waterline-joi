@@ -7,16 +7,16 @@ function convert(blueprint) {
   // Where we'll push keys to.
   var ret = {}
 
-  // Create a base out object.
-  var out = Joi
-
   // These will be set in the loop below.
   /* eslint-disable */
-  var type, value, property_key
+  var type, value, property_key, out
   /* eslint-enable */
 
   // Loop over the keys and build a schema.
   for (property_key in blueprint) {
+    // Create a base out object.
+    out = Joi
+
     // Set the value to keep the below easier to read.
     value = blueprint[property_key]
 
@@ -24,7 +24,7 @@ function convert(blueprint) {
     // not an object and is just a type. Set it.
     type = value.type || value
 
-    // Sort the type conversion over.
+    // Sort the type conversion out.
     switch (type) {
     case "string":
     case "text":
@@ -67,7 +67,7 @@ function convert(blueprint) {
 
       // Is it also a regex?
       if (value.is || value.regex) {
-        out = out.pattern(value.is || value.regex)
+        out = out.regex(value.is || value.regex)
       }
 
       // Is it an url.
