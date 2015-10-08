@@ -14,6 +14,8 @@ var blueprint_attributes = {
   basic_date: "date",
   basic_binary: "binary",
 
+  basic_random: "evil",
+
   enum_string: {
     type: "string",
     enum: ["test1", "test2"]
