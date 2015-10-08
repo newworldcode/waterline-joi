@@ -121,7 +121,7 @@ function convert(blueprint) {
     }
 
     if (value.hasOwnProperty("max") || value.hasOwnProperty("maxLength")) {
-      out = out.min(value.hasOwnProperty("max") ? value.max : value.maxLength)
+      out = out.max(value.hasOwnProperty("max") ? value.max : value.maxLength)
     }
 
     // Check for more `.valid()` cases.
