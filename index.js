@@ -109,15 +109,19 @@ function convert(blueprint) {
     case "binary":
       out = out.binary()
       break
+    default:
+      console.warn("'%s' not recognised. Not good, setting to .any()", value.type)
+      out = out.any()
+      break
     } // </switch
 
     // Check for various length arguments.
     if (value.hasOwnProperty("min") || value.hasOwnProperty("minLength")) {
-      out = out.min(value.min || value.minLength)
+      out = out.min(value.hasOwnProperty("min") ? value.min : value.minLength)
     }
 
     if (value.hasOwnProperty("max") || value.hasOwnProperty("maxLength")) {
-      out = out.min(value.max || value.maxLength)
+      out = out.min(value.hasOwnProperty("max") ? value.max : value.maxLength)
     }
 
     // Check for more `.valid()` cases.
