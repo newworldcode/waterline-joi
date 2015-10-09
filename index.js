@@ -104,6 +104,15 @@ function convert(blueprint) {
       if (value.hasOwnProperty("after")) {
         out = out.min(value.after)
       }
+
+      if (value.hasOwnProperty("default")) {
+        if (value.default === "NOW") {
+          out = out.default(function() { return new Date() }, "Default Date Time")
+        }
+        else {
+          out = out.default(value.default)
+        }
+      }
       break
 
     case "binary":
