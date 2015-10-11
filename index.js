@@ -20,6 +20,11 @@ function convert(blueprint) {
     // Set the value to keep the below easier to read.
     value = blueprint[property_key]
 
+    // If it's an association, don't do anything just continue.
+    if (value.model) {
+      continue
+    }
+
     // Get the type from the blueprint or if it's
     // not an object and is just a type. Set it.
     type = value.type || value
@@ -107,6 +112,7 @@ function convert(blueprint) {
 
       if (value.hasOwnProperty("default")) {
         if (value.default === "NOW") {
+          /* istanbul ignore next: Untestable */
           out = out.default(function() { return new Date() }, "Default Date Time")
         }
         else {

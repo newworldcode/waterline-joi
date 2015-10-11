@@ -91,6 +91,16 @@ var blueprint_attributes = {
     after: "01/01/1970"
   },
 
+  date_default_now: {
+    type: "date",
+    default: "NOW"
+  },
+
+  date_default: {
+    type: "date",
+    default: new Date()
+  },
+
   string_min: {
     type: "string",
     min: 1
@@ -129,6 +139,10 @@ var blueprint_attributes = {
   required_string: {
     type: "string",
     required: true
+  },
+
+  association: {
+    model: "test"
   }
 }
 
