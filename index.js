@@ -125,9 +125,15 @@ function convert(blueprint) {
       out = out.binary()
       break
     default:
+      // Warn the dev.
       console.warn("'%s' not recognised. Not good, setting to .any()", value.type)
+
+      // Set the type.
       out = out.any()
-      break
+
+      // Don't do anything more with this value,
+      // it doesn't have things like .min() or .default()
+      continue
     } // </switch
 
     // Check for various length arguments.
