@@ -33,6 +33,7 @@ function convert(blueprint) {
     switch (type) {
     case "string":
     case "text":
+    case "email":
       // Set the type.
       out = out.string()
 
@@ -52,7 +53,7 @@ function convert(blueprint) {
       }
 
       // Is it an email address?
-      if (value.email) {
+      if (type === "email" || value.email) {
         out = out.email()
       }
 
