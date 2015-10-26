@@ -13,6 +13,7 @@ var blueprint_attributes = {
   basic_float: "float",
   basic_date: "date",
   basic_binary: "binary",
+  basic_bool: "boolean",
 
   basic_random: "evil",
 

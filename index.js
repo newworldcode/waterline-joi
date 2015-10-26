@@ -125,6 +125,9 @@ function convert(blueprint) {
     case "binary":
       out = out.binary()
       break
+    case "boolean":
+      out = out.boolean()
+      break
     default:
       // Warn the dev.
       console.warn("'%s' not recognised. Not good, setting to .any()", value.type)
