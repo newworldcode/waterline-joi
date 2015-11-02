@@ -1,8 +1,28 @@
 "use strict"
 
-function convert(blueprint) {
+/**
+ * Return a new Date instance.
+ * Used in the schema for default date/time/datetime values.
+ * @return {Date} current date and time.
+ */
+/* istanbul ignore next : Not testable */
+function get_new_date() {
+  return new Date()
+}
+
+/**
+ * Convert a Waterline blueprint into
+ * a Joi schema for validation.
+ * @param  {Object} blueprint to convert to Joi schema.
+ * @param  {Boolean} wrap_joi_object, whether to wrap the output in Joi.object()
+ * @return {Object} converted Waterline blueprint.
+ */
+function convert(blueprint, wrap_joi_object) {
   // Get the Joi library.
   var Joi = require("joi")
+
+  // Should we wrap the output schema in Joi.object()?
+  var wrap = typeof wrap_joi_object === "undefined" ? true : wrap_joi_object
 
   // Where we'll push keys to.
   var ret = {}
@@ -22,7 +42,9 @@ function convert(blueprint) {
 
     // If it's an association, don't do anything just continue.
     if (value.model) {
+      /* eslint-disable */
       continue
+      /* eslint-enable */
     }
 
     // Get the type from the blueprint or if it's
@@ -114,7 +136,7 @@ function convert(blueprint) {
       if (value.hasOwnProperty("default")) {
         if (value.default === "NOW") {
           /* istanbul ignore next: Untestable */
-          out = out.default(function() { return new Date() }, "Default Date Time")
+          out = out.default(get_new_date, "Default Date Time")
         }
         else {
           out = out.default(value.default)
@@ -137,7 +159,9 @@ function convert(blueprint) {
 
       // Don't do anything more with this value,
       // it doesn't have things like .min() or .default()
+      /* eslint-disable */
       continue
+      /* eslint-enable */
     } // </switch
 
     // Check for various length arguments.
@@ -175,7 +199,7 @@ function convert(blueprint) {
   } // </for
 
   // Return the schema.
-  return Joi.object().keys(ret)
+  return wrap ? Joi.object(ret) : ret
 }
 
 module.exports = convert

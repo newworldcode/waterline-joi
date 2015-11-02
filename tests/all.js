@@ -153,5 +153,9 @@ tape("Convert object.", function(test) {
     convert_waterline_joi(blueprint_attributes)
   }, "Converting does not throw an error")
 
+  test.doesNotThrow(function() {
+    convert_waterline_joi(blueprint_attributes, false)
+  }, "Converting does not throw an error when wrapping")
+
   test.end()
 })
