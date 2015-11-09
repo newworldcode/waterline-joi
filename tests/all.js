@@ -14,6 +14,7 @@ var blueprint_attributes = {
   basic_date: "date",
   basic_binary: "binary",
   basic_bool: "boolean",
+  basic_object: "object",
 
   basic_random: "evil",
 

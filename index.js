@@ -53,6 +53,9 @@ function convert(blueprint, wrap_joi_object) {
 
     // Sort the type conversion out.
     switch (type) {
+    case "object":
+      out = out.object()
+      break
     case "string":
     case "text":
     case "email":
