@@ -41,7 +41,7 @@ function convert(blueprint, wrap_joi_object) {
     value = blueprint[property_key]
 
     // If it's an association, don't do anything just continue.
-    if (value.model) {
+    if (value.model || value.collection) {
       /* eslint-disable */
       continue
       /* eslint-enable */

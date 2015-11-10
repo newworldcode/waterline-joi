@@ -1,6 +1,6 @@
 {
   "name": "waterline-joi",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Waterline Blueprint to Joi validation converter",
   "main": "index.js",
   "scripts": {
