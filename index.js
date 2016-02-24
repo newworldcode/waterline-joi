@@ -1,14 +1,16 @@
 "use strict"
 
+// Get some tools.
+const colours = require("colors/safe")
+const Joi = require("joi")
+
 /**
  * Return a new Date instance.
  * Used in the schema for default date/time/datetime values.
  * @return {Date} current date and time.
  */
-/* istanbul ignore next : Not testable */
-function get_new_date() {
-  return new Date()
-}
+/* istanbul ignore next : Untestable */
+const get_new_date = () => new Date()
 
 /**
  * Convert a Waterline blueprint into
@@ -18,18 +20,15 @@ function get_new_date() {
  * @return {Object} converted Waterline blueprint.
  */
 function convert(blueprint, wrap_joi_object) {
-  // Get the Joi library.
-  var Joi = require("joi")
-
   // Should we wrap the output schema in Joi.object()?
-  var wrap = typeof wrap_joi_object === "undefined" ? true : wrap_joi_object
+  const wrap = typeof wrap_joi_object === "undefined" ? true : wrap_joi_object
 
   // Where we'll push keys to.
-  var ret = {}
+  const ret = {}
 
   // These will be set in the loop below.
   /* eslint-disable */
-  var type, value, property_key, out
+  let type, value, property_key, out
   /* eslint-enable */
 
   // Loop over the keys and build a schema.
@@ -120,6 +119,9 @@ function convert(blueprint, wrap_joi_object) {
 
     case "integer":
     case "float":
+    case "int":
+    case "bigint":
+    case "serial":
       out = out.number()
       break
 
@@ -147,6 +149,14 @@ function convert(blueprint, wrap_joi_object) {
       }
       break
 
+    case "array":
+      out = out.array()
+      break
+
+    case "json":
+      out = out.object()
+      break
+
     case "binary":
       out = out.binary()
       break
@@ -155,7 +165,9 @@ function convert(blueprint, wrap_joi_object) {
       break
     default:
       // Warn the dev.
-      console.warn("'%s' not recognised. Not good, setting to .any()", value.type)
+      /* eslint-disable */
+      console.log(colours.red("LINT: '%s' not a recognised type. Setting to .any(), please resolve."), value.type || value)
+      /* eslint-enable */
 
       // Set the type.
       out = out.any()

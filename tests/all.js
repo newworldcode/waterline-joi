@@ -1,13 +1,13 @@
 "use strict"
 
 // Get the testing library.
-var tape = require("tape")
+const tape = require("tape")
 
 // Get the library.
-var convert_waterline_joi = require("../index")
+const convert_waterline_joi = require("../index")
 
 // Create a pretty inclusive blueprint attributes to test.
-var blueprint_attributes = {
+const blueprint_attributes = {
   basic_string: "string",
   basic_int: "integer",
   basic_float: "float",
@@ -17,6 +17,9 @@ var blueprint_attributes = {
   basic_object: "object",
 
   basic_random: "evil",
+
+  basic_array: "array",
+  basic_json: "json",
 
   enum_string: {
     type: "string",
@@ -148,15 +151,13 @@ var blueprint_attributes = {
   }
 }
 
-tape("Convert object.", function(test) {
+tape("Convert object.", (test) => {
   // Check the obvious.
-  test.doesNotThrow(function() {
-    convert_waterline_joi(blueprint_attributes)
-  }, "Converting does not throw an error")
+  test.doesNotThrow(() => convert_waterline_joi(blueprint_attributes),
+    "Converting does not throw an error")
 
-  test.doesNotThrow(function() {
-    convert_waterline_joi(blueprint_attributes, false)
-  }, "Converting does not throw an error when wrapping")
+  test.doesNotThrow(() => convert_waterline_joi(blueprint_attributes, false),
+    "Converting does not throw an error when wrapping")
 
   test.end()
 })
