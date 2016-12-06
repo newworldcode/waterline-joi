@@ -40,7 +40,7 @@ function convert(blueprint, wrap_joi_object) {
     value = blueprint[property_key]
 
     // If it's an association, don't do anything just continue.
-    if (value.model || value.collection) {
+    if (value.model || value.collection || property_key === "toJSON") {
       /* eslint-disable */
       continue
       /* eslint-enable */
