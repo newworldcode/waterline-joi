@@ -38,12 +38,20 @@ const blueprint_attributes = {
 
   email_string: {
     type: "string",
-    email: true
+    email: true,
+    metadata: {
+      label: "Enter your best email",
+      description: "A valid email address is required so we can market to you relentlessly."
+    }
   },
 
   creditcard_string: {
     type: "string",
-    creditcard: true
+    creditcard: true,
+    metadata: {
+      label: "Full credit card number",
+      notes: "So you can pay for the things you want from us."
+    }
   },
 
   lowercase_string: {
@@ -148,7 +156,9 @@ const blueprint_attributes = {
 
   association: {
     model: "test"
-  }
+  },
+
+  toJSON: () => {}
 }
 
 tape("Convert object.", (test) => {

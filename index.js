@@ -205,7 +205,20 @@ function convert(blueprint, wrap_joi_object) {
 
     // Check if the value has a default.
     if (value.hasOwnProperty("defaultsTo")) {
-      out = out.default(value.defaultsTo, "Default Joi value").optional()
+      out = out.default(value.defaultsTo, `Default ${property_key} value`).optional()
+    }
+
+    if (value.hasOwnProperty("metadata")) {
+      Object.keys(value.metadata).forEach(key => {
+        switch (key.toLowerCase()) {
+        case "label":
+          out.label(value.metadata.label)
+          break
+        case "notes":
+        case "description":
+          out.description(value.metadata.notes || value.metadata.description)
+        }
+      })
     }
 
     // Add the property to the return value.
