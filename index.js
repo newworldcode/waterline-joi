@@ -39,8 +39,15 @@ function convert(blueprint, wrap_joi_object) {
     // Set the value to keep the below easier to read.
     value = blueprint[property_key]
 
+    // If it's a function, exit.
+    if (property_key === "toJSON" || value instanceof Function) {
+      /* eslint-disable */
+      continue
+      /* eslint-enable */
+    }
+
     // If it's an association, don't do anything just continue.
-    if (value.model || value.collection || property_key === "toJSON") {
+    if (value.model || value.collection) {
       // Create an alternatives for varying types
       // of id or just an object (since we can't see into the future. Yet.)
       ret[property_key] = Joi.alternatives().try(Joi.string(), Joi.number(), Joi.object().unknown(true))
