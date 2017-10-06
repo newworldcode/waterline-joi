@@ -41,7 +41,8 @@ const blueprint_attributes = {
     email: true,
     metadata: {
       label: "Enter your best email",
-      description: "A valid email address is required so we can market to you relentlessly."
+      description: "A valid email address is required so we can market to you relentlessly.",
+      example: "email@domain.com"
     }
   },
 

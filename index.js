@@ -228,6 +228,9 @@ function convert(blueprint, wrap_joi_object) {
         case "notes":
         case "description":
           out.description(value.metadata.notes || value.metadata.description)
+          break
+        case "example":
+          out.example(value.metadata.example)
         }
       })
     }
