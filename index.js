@@ -213,6 +213,9 @@ function convert(blueprint, wrap_joi_object) {
     if (value.required) {
       out = out.required()
     }
+    else if (type === "string") {
+      out.empty("")
+    }
 
     // Check if the value has a default.
     if (value.hasOwnProperty("defaultsTo")) {
