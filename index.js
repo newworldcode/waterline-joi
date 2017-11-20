@@ -48,9 +48,18 @@ function convert(blueprint, wrap_joi_object) {
 
     // If it's an association, don't do anything just continue.
     if (value.model || value.collection) {
+      const base_types = Joi.alternatives().try(Joi.string(), Joi.number(), Joi.object().unknown(true))
       // Create an alternatives for varying types
       // of id or just an object (since we can't see into the future. Yet.)
-      ret[property_key] = Joi.alternatives().try(Joi.string(), Joi.number(), Joi.object().unknown(true))
+      if (value.model)
+        ret[property_key] = base_types
+      else
+        ret[property_key] = Joi.array().items(base_types)
+
+      if (value.required)
+        ret[property_key] = ret[property_key].required()
+      else
+        ret[property_key] = ret[property_key].optional()
 
       /* eslint-disable */
       continue
@@ -213,8 +222,8 @@ function convert(blueprint, wrap_joi_object) {
     if (value.required) {
       out = out.required()
     }
-    else if (type === "string") {
-      out.empty("")
+    else {
+      out = out.optional()
     }
 
     // Check if the value has a default.
