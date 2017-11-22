@@ -1,7 +1,6 @@
 "use strict"
 
 // Get some tools.
-const colours = require("colors/safe")
 const Joi = require("joi")
 
 /**
@@ -46,7 +45,7 @@ function convert(blueprint, wrap_joi_object) {
       /* eslint-enable */
     }
 
-    // If it's an association, don't do anything just continue.
+    // If it's an association, just check prescence.
     if (value.model || value.collection) {
       const base_types = Joi.alternatives().try(Joi.string(), Joi.number(), Joi.object().unknown(true))
       // Create an alternatives for varying types
@@ -59,7 +58,7 @@ function convert(blueprint, wrap_joi_object) {
       if (value.required)
         ret[property_key] = ret[property_key].required()
       else
-        ret[property_key] = ret[property_key].optional()
+        ret[property_key] = ret[property_key].optional().allow(null, "")
 
       /* eslint-disable */
       continue
@@ -186,7 +185,7 @@ function convert(blueprint, wrap_joi_object) {
     default:
       // Warn the dev.
       /* eslint-disable */
-      console.log(colours.red("LINT: '%s' not a recognised type. Setting to .any(), please resolve."), value.type || value)
+      console.log("LINT: '%s' not a recognised type. Setting to .any(), please resolve.", value.type || value)
       /* eslint-enable */
 
       // Set the type.
@@ -223,7 +222,7 @@ function convert(blueprint, wrap_joi_object) {
       out = out.required()
     }
     else {
-      out = out.optional()
+      out = out.optional().allow(null, "")
     }
 
     // Check if the value has a default.
