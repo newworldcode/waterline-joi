@@ -71,12 +71,7 @@ function convert(blueprint, wrap_joi_object) {
 
     // Sort the type conversion out.
     switch (type) {
-    case "object":
-      out = out.object()
-      break
     case "string":
-    case "text":
-    case "email":
       // Set the type.
       out = out.string()
 
@@ -136,11 +131,7 @@ function convert(blueprint, wrap_joi_object) {
 
       break
 
-    case "integer":
-    case "float":
-    case "int":
-    case "bigint":
-    case "serial":
+    case "number":
       out = out.number()
       break
 
@@ -168,10 +159,6 @@ function convert(blueprint, wrap_joi_object) {
       }
       break
 
-    case "array":
-      out = out.array()
-      break
-
     case "json":
       out = out.object()
       break
@@ -183,11 +170,6 @@ function convert(blueprint, wrap_joi_object) {
       out = out.boolean()
       break
     default:
-      // Warn the dev.
-      /* eslint-disable */
-      console.log("LINT: '%s' not a recognised type. Setting to .any(), please resolve.", value.type || value)
-      /* eslint-enable */
-
       // Set the type.
       out = out.any()
 
